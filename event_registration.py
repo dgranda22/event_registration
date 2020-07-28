@@ -3,6 +3,7 @@ Created on Jul 27, 2020
 
 @author: Daniel Granda
 '''
+import json
 
 class Contacts:
     def __init__(self, name, email, phone):
@@ -147,3 +148,5 @@ testUpdate2 = myContacts.findEmail('bob@crowns.com')
 print(testUpdate2.name)
 print(testUpdate2.email)
 print(testUpdate2.phone)
+
+testRemove = myLeads.find
