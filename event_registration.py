@@ -21,15 +21,33 @@ class ContactsList:
     def __init__(self, contacts):
         self.contacts = contacts
         
-    def updateContact(self, index, name, email, phone):
-        #updates contact list at a specified index
+    def updateContact(self, contact, name, email, phone):
+        #updates contact list at a specified contact
         #only updates data points assigned to None
-        print('no u')
+        contactIndex = self.contacts.index(contact)
+        if(contactIndex is not None):
+            if(self.contacts[contactIndex].name is None):
+                self.contacts[contactIndex].name = name
+            if(self.contacts[contactIndex].email is None):
+                self.contacts[contactIndex].email = email
+            if(self.contacts[contactIndex].phone is None):
+                self.contacts[contactIndex].phone = phone
         
     def addContact(self, name, email, phone):
         #adds a contact to the existing contact list
-        newContact = Contacts(name, email, phone)
-        self.contacts.append(newContact)
+        #only adds if email and phone don't yet exist
+        updateEmail = self.findEmail(email)
+        updatePhone = self.findPhone(phone)
+        if(updateEmail is None and updatePhone is None):
+            #if neither email or phone are already input
+            newContact = Contacts(name, email, phone)
+            self.contacts.append(newContact)
+        elif(updateEmail is not None):
+            #if a contact exists with an existing email, update that contact
+            self.updateContact(updateEmail, name, email, phone)
+        elif(updatePhone is not None):
+            #if a contact exists with an existing phone number, update that contact
+            self.updateContact(updatePhone, name, email, phone)
         
     def findEmail(self, email):
         #searches through the contact list for a specified email and returns the contact
@@ -54,6 +72,34 @@ class ContactsList:
 class LeadsList:
     def __init__(self, leads):
         self.leads = leads
+        
+    def removeLead(self, lead, contactList):
+        #removes lead from list given a specified lead
+        #adds it to a given contact list
+        leadIndex = self.leads.index(lead)
+        if(leadIndex is not None):
+            contactList.addContact(lead.name, lead.email, lead.phone)
+            self.leads.remove(lead);
+        
+    def findEmail(self, email):
+        #searches through the lead list for a specified email and returns the lead
+        #returns None if not found
+        returnLead = None
+        for currentLead in self.leads:
+            if(currentLead.email == email):
+                returnLead = currentLead
+                break
+        return returnLead
+    
+    def findPhone(self, phone):
+        #searches through the lead list for a specified phone number and returns the lead
+        #returns None if not found
+        returnLead = None
+        for currentLead in self.leads:
+            if(currentLead.phone == phone):
+                returnLead = currentLead
+                break
+        return returnLead
 
 #contacts data
 contact1 = Contacts('Alice Brown', None, 1231112223)
@@ -74,9 +120,30 @@ lead5 = Leads(None, 'ole@olson.com', None)
 #stores leads data into LeadsList
 myLeads = LeadsList([lead1, lead2, lead3, lead4, lead5])
 
+
+#for testing purposes
 print('Hello World')
 print(myLeads.leads[2].name)
 testEmailSearch = myContacts.findEmail('bob@crowns.com')
 testEmailSearch2 = myContacts.findEmail('nope')
 print(testEmailSearch.name)
 print(testEmailSearch2)
+testPhoneSearch = myContacts.findPhone(5675556667)
+testPhoneSearch2 = myContacts.findPhone(123412341234)
+print(testPhoneSearch.name)
+print(testPhoneSearch2)
+
+testContact = myContacts.findEmail('carl@drewess.com')
+tc2 = myContacts.contacts.index(testContact);
+print(testContact.name)
+print(myContacts.contacts[tc2].name)
+
+testUpdate = myContacts.findEmail('bob@crowns.com')
+print(testUpdate.name)
+print(testUpdate.email)
+print(testUpdate.phone)
+myContacts.updateContact(testUpdate, 'Bob', 'bob@crowns.com', 2222222222)
+testUpdate2 = myContacts.findEmail('bob@crowns.com')
+print(testUpdate2.name)
+print(testUpdate2.email)
+print(testUpdate2.phone)
