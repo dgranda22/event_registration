@@ -9,6 +9,7 @@ class Contacts:
         self.name = name
         self.email = email
         self.phone = phone
+        
 
 class Leads:
     def __init__(self, name, email, phone):
@@ -19,6 +20,36 @@ class Leads:
 class ContactsList:
     def __init__(self, contacts):
         self.contacts = contacts
+        
+    def updateContact(self, index, name, email, phone):
+        #updates contact list at a specified index
+        #only updates data points assigned to None
+        print('no u')
+        
+    def addContact(self, name, email, phone):
+        #adds a contact to the existing contact list
+        newContact = Contacts(name, email, phone)
+        self.contacts.append(newContact)
+        
+    def findEmail(self, email):
+        #searches through the contact list for a specified email and returns the contact
+        #returns None if not found
+        returnContact = None
+        for currentContact in self.contacts:
+            if(currentContact.email == email):
+                returnContact = currentContact
+                break
+        return returnContact
+    
+    def findPhone(self, phone):
+        #searches through the contact list for a specified phone number and returns the contact
+        #returns None if not found
+        returnContact = None
+        for currentContact in self.contacts:
+            if(currentContact.phone == phone):
+                returnContact = currentContact
+                break
+        return returnContact
 
 class LeadsList:
     def __init__(self, leads):
@@ -45,3 +76,7 @@ myLeads = LeadsList([lead1, lead2, lead3, lead4, lead5])
 
 print('Hello World')
 print(myLeads.leads[2].name)
+testEmailSearch = myContacts.findEmail('bob@crowns.com')
+testEmailSearch2 = myContacts.findEmail('nope')
+print(testEmailSearch.name)
+print(testEmailSearch2)
