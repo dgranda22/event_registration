@@ -4,19 +4,25 @@ Created on Jul 27, 2020
 @author: Daniel Granda
 '''
 import json
+import os.path
 
 class Contacts:
     def __init__(self, name, email, phone):
         self.name = name
         self.email = email
         self.phone = phone
-        
 
 class Leads:
     def __init__(self, name, email, phone):
         self.name = name
         self.email = email
         self.phone = phone
+        
+class Registrants:
+    def __init__(self, name, email, phone):
+        self.name = name
+        self.email = email
+        self.phone = phone   
 
 class ContactsList:
     def __init__(self, contacts):
@@ -101,8 +107,28 @@ class LeadsList:
                 returnLead = currentLead
                 break
         return returnLead
+    
+class RegistrantsList:
+    def __init__(self, registrants):
+        self.registrants = registrants
+        
+    def addFromJson(self, jsonFile):
+        #given a file name, loads the registrant data from file and adds a registrant object to the registrant list
+        if(os.path.isfile(jsonFile)):
+            with open(jsonFile, 'r') as myFile:
+                newRegInfo = json.load(myFile)
+                newRegName = newRegInfo['registrant']['name']
+                newRegEmail = newRegInfo['registrant']['email']
+                newRegPhone = newRegInfo['registrant']['phone']
+                newRegistrant = Registrants(newRegName, newRegEmail, newRegPhone)
+                self.registrants.append(newRegistrant)
+                
+    def match(self, contacts, leads):
+        print(contacts.contacts[0].name)
+        contacts.contacts[0].name = "changed"
+        print(contacts.contacts[0].name)
+        
 
-#contacts data
 contact1 = Contacts('Alice Brown', None, 1231112223)
 contact2 = Contacts('Bob Crown', 'bob@crowns.com', None)
 contact3 = Contacts('Carlos Drew', 'carl@drewess.com', 3453334445)
@@ -121,8 +147,18 @@ lead5 = Leads(None, 'ole@olson.com', None)
 #stores leads data into LeadsList
 myLeads = LeadsList([lead1, lead2, lead3, lead4, lead5])
 
+#registrants data, creates empty registrants list
+myRegistrants = RegistrantsList([])
+#loads json data into registrants list via external files
+regArray = ['registrant1.json', 'registrant2.json', 'registrant3.json'];
+for reg in regArray:
+    myRegistrants.addFromJson(reg)
+    
+myRegistrants.match(myContacts, myLeads)
+print(myContacts.contacts[0].name)
 
 #for testing purposes
+"""
 print('Hello World')
 print(myLeads.leads[2].name)
 testEmailSearch = myContacts.findEmail('bob@crowns.com')
@@ -149,4 +185,7 @@ print(testUpdate2.name)
 print(testUpdate2.email)
 print(testUpdate2.phone)
 
-testRemove = myLeads.find
+print(myRegistrants.registrants[0].name)
+"""
+
+#testRemove = myLeads.find
