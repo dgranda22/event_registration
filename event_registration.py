@@ -182,7 +182,8 @@ class RegistrantsList:
         print("Registrants")
         for h in self.registrants:
             print("\n\tName: " + str(h.name) + "\n\tEmail: " + str(h.email) + "\n\tPhone: " + str(h.phone))
-        
+
+
 #contacts data
 contact1 = Contacts("Alice Brown", None, "1231112223")
 contact2 = Contacts("Bob Crown", "bob@crowns.com", None)
@@ -191,7 +192,6 @@ contact4 = Contacts("Doug Emtry", None, "4564445556")
 contact5 = Contacts("Egan Fair", "eg@fairness.com", "5675556667")
 #stores contacts data into ContactsList
 myContacts = ContactsList([contact1, contact2, contact3, contact4, contact5])
-
 
 #leads data
 lead1 = Leads(None, "kevin@keith.com", None)
@@ -208,50 +208,16 @@ myRegistrants = RegistrantsList([])
 regArray = ['registrant1.json', 'registrant2.json', 'registrant3.json'];
 for reg in regArray:
     myRegistrants.addFromJson(reg)
-    
 
-#for testing purposes
-"""
-print('Hello World')
-print(myLeads.leads[2].name)
-testEmailSearch = myContacts.findEmail('bob@crowns.com')
-testEmailSearch2 = myContacts.findEmail('nope')
-print(testEmailSearch.name)
-print(testEmailSearch2)
-testPhoneSearch = myContacts.findPhone(5675556667)
-testPhoneSearch2 = myContacts.findPhone(123412341234)
-print(testPhoneSearch.name)
-print(testPhoneSearch2)
-
-testContact = myContacts.findEmail('carl@drewess.com')
-tc2 = myContacts.contacts.index(testContact);
-print(testContact.name)
-print(myContacts.contacts[tc2].name)
-
-testUpdate = myContacts.findEmail('bob@crowns.com')
-print(testUpdate.name)
-print(testUpdate.email)
-print(testUpdate.phone)
-myContacts.updateContact(testUpdate, 'Bob', 'bob@crowns.com', 2222222222)
-testUpdate2 = myContacts.findEmail('bob@crowns.com')
-print(testUpdate2.name)
-print(testUpdate2.email)
-print(testUpdate2.phone)
-
-print(myRegistrants.registrants[0].name)
-
-testRemove = myLeads.findPhone(3331112223)
-print(testRemove.name)
-myLeads.removeLead(testRemove, myContacts)
-testRemove2 = myContacts.findPhone(3331112223)
-print(testRemove2.name)
-"""
+#prints out contacts, leads, and registrants to console before matching
 myContacts.printContacts()
 myLeads.printLeads()
-#myRegistrants.printRegistrants()
+myRegistrants.printRegistrants()
 
+#matches registrants with existing contacts and leads
 myRegistrants.match(myContacts, myLeads)
+print("\n\nMatch Registrants\n")
 
+#prints out contacts and leads to console after matching
 myContacts.printContacts()
 myLeads.printLeads()
-#myRegistrants.printRegistrants()
