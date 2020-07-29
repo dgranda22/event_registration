@@ -134,17 +134,18 @@ class LeadsList:
 class RegistrantsList:
     def __init__(self, registrants):
         self.registrants = registrants
-        
+                
     def addFromJson(self, jsonFile):
-        #given a file name, loads the registrant data from file and adds a registrant object to the registrant list
+        #given a file name, loads all registrant data from file and adds registrant objects to the registrant list
         if(os.path.isfile(jsonFile)):
             with open(jsonFile, 'r') as myFile:
                 newRegInfo = json.load(myFile)
-                newRegName = newRegInfo['registrant']['name']
-                newRegEmail = newRegInfo['registrant']['email']
-                newRegPhone = newRegInfo['registrant']['phone']
-                newRegistrant = Registrants(newRegName, newRegEmail, newRegPhone)
-                self.registrants.append(newRegistrant)
+                for index in newRegInfo:
+                    newRegName = newRegInfo[index]['name']
+                    newRegEmail = newRegInfo[index]['email']
+                    newRegPhone = newRegInfo[index]['phone']
+                    newRegistrant = Registrants(newRegName, newRegEmail, newRegPhone)
+                    self.registrants.append(newRegistrant)
                 
     def match(self, contacts, leads):
         #matches registrants with entries found within contacts list and leads list
@@ -204,10 +205,9 @@ myLeads = LeadsList([lead1, lead2, lead3, lead4, lead5])
 
 #registrants data, creates empty registrants list
 myRegistrants = RegistrantsList([])
-#loads json data into registrants list via external files
-regArray = ['registrant1.json', 'registrant2.json', 'registrant3.json'];
-for reg in regArray:
-    myRegistrants.addFromJson(reg)
+#loads json data into registrants list via external file
+myRegistrants.addFromJson('registrants.json')
+
 
 #prints out contacts, leads, and registrants to console before matching
 myContacts.printContacts()

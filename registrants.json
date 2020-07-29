@@ -1,0 +1,20 @@
+{
+  "registrant1":
+  {
+    "name": "Lucy Liu",
+    "email": "lucy@liu.com",
+    "phone": "3210001112"
+  },
+  "registrant2":
+  {
+    "name": "Doug",
+    "email": "doug@emmy.com",
+    "phone": "4564445556"
+  },
+  "registrant3":
+  {
+    "name": "Uma Thurman",
+    "email": "uma@thurs.com",
+    "phone": null
+  }
+}
